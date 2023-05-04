@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config # qualquer nome
+data: # key/value para compartilhar na configuração externa
+  mongo-url: mongo-service #aqui no caso vamos informar o nome do service que ainda vai ser criado para o mongo

@@ -1,0 +1,21 @@
+# Servirá para Deployment e Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongodb
+spec: # This spec section is specific to kind: Deployment
+  selector:
+    matchLabels:
+      app: mongodb
+  template: # This is the Blueprint configuration of the Pods
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:5.0
+          ports:
+          - containerPort: 27017
