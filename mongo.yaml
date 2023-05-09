@@ -4,18 +4,33 @@ kind: Deployment
 metadata:
   name: mongo-deployment
   labels:
-    app: mongodb
+    app: mongo
 spec: # This spec section is specific to kind: Deployment
+  replicas: 1
   selector:
-    matchLabels:
-      app: mongodb
+    matchLabels: # This is where we defined wich label we gonna use to match the deployment and the pod and create the resources(image, etc)
+      app: mongo-pod
   template: # This is the Blueprint configuration of the Pods
-    metadata:
-      labels:
-        app: mongodb
-    spec:
+    metadata: # template has its own metadata & spec section
+      labels: # for Pods is necessary so pod has an unique name (different) bug can share the same label. That's why label is so import in pods.
+        app: mongo-pod
+    spec: # This will create Pods with the desired image
       containers:
         - name: mongodb
-          image: mongo:5.0
+          image: mongo:5.0 # Docker image for the pod
           ports:
           - containerPort: 27017
+
+# the "---" breaks to another configuration inside same file
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service # same name we defined as endpoint in mongo-configmap
+spec:
+  selector: # select the Pods to forward the requests
+    app: mongo-pod # the key/value here should match the label of the pods
+  ports:
+  - protocol: TCP
+    port: 27017 # External Port
+    targetPort: 27017 # Port of the Pods that belongs to the Service

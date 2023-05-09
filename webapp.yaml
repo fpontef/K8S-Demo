@@ -1,0 +1,35 @@
+# Servirá para Deployment e Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-pod
+  template:
+    metadata:
+      labels:
+        app: webapp-pod
+    spec:
+      containers:
+        - name: webapp
+          image: nanajanashia/k8s-demo-app:v1.0
+          ports:
+          - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  selector:
+    app: webapp-pod
+  ports:
+  - protocol: TCP
+    port: 3003
+    targetPort: 3000
