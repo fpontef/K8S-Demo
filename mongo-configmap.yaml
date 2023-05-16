@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: mongo-config # qualquer nome
 data: # Aqui informamos as key/value para compartilhar na configuração externa
-  mongo-url: mongo-service #aqui no caso vamos informar o nome do service que ainda vai ser criado para o mongo
+  MONGO_URI: mongo-service #aqui no caso vamos informar o nome do service que ainda vai ser criado para o mongo

@@ -17,9 +17,27 @@ spec: # This spec section is specific to kind: Deployment
     spec: # This will create Pods with the desired image
       containers:
         - name: mongodb
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "2"
           image: mongo:5.0 # Docker image for the pod
           ports:
           - containerPort: 27017
+          env: # as sugests, env to pass to docker image
+          # - name: name_of_the_value
+          #   value: myhardcodedvalue OR use valueFrom
+          #   valueFrom: secret_config-reference
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_USER
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_PASSWORD
 
 # the "---" breaks to another configuration inside same file
 ---

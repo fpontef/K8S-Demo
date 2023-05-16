@@ -17,10 +17,29 @@ spec:
     spec:
       containers:
         - name: webapp
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "2"
           image: nanajanashia/k8s-demo-app:v1.0
           ports:
           - containerPort: 3000
-
+          env:
+          - name: USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_USER
+          - name: USER_PWD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_PASSWORD
+          - name: DB_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-config
+                key: MONGO_URI
 ---
 apiVersion: v1
 kind: Service
