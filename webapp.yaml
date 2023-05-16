@@ -46,9 +46,11 @@ kind: Service
 metadata:
   name: webapp-service
 spec:
-  selector:
+  type: NodePort # by default is ClusterIP, an internal Type
+  selector:      # But we need NodePort, and external service Type
     app: webapp-pod
   ports:
   - protocol: TCP
     port: 3003
     targetPort: 3000
+    nodePort: 30100 # Exposes the Service on each Node's IP at a static port (30000 - 32767 range of ports)
