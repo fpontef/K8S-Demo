@@ -20,7 +20,7 @@ spec:
           resources:
             limits:
               memory: 512Mi
-              cpu: "2"
+              # cpu: "1"
           image: nanajanashia/k8s-demo-app:v1.0
           ports:
           - containerPort: 3000
