@@ -68,3 +68,11 @@ kubectl describe pod POD_NAME_OF_THE_SERVICE
 kubectl get events
 
 ```
+
+## Known issue
+
+If you can't access the NodePort service webapp with MinikubeIP:NodePort, execute the following command:
+
+```console
+minikube service webapp-service
+```
